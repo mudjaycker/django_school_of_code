@@ -42,3 +42,13 @@ def update_task(request, pk):
     return render(request, template_name="update_task.html", context={"todo": todo})
 
 
+def login(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = auth.authenticate(username=username, password=password)
+
+        if user:
+            auth.login(request, user)
+            return redirect("/list-todos/")
+        return render(request, template_name="login.html")
