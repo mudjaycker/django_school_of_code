@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from .models import Auteur, ToDo
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -54,4 +55,19 @@ def login(request):
     return render(request, template_name="login.html")
 
 
-# def enregistree
+def enregistrement(request):
+    if request.method == "POST":
+        nom = request.POST.get("nom")
+        prenom = request.POST.get("prenom")
+        email = request.POST.get("email")
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        num_phone = request.POST.get("num_phone")
+
+        user = User(username=username, email=email, first_name=prenom, last_name=nom )
+        user.set_password(password)
+        user.save()
+        auteur = Auteur(user=user, num_phone=num_phone)
+        auteur.save()
+        return redirect("/login/")
+    return render(request, template_name="enregistrement.html")
