@@ -15,7 +15,10 @@ def add_new_todo(request):
         return redirect("/list-todos/")
     return render(request, template_name="add_todo.html")
 
-
 def list_todos(request):
     todos = ToDo.objects.all()
     return render(request, template_name="list_todos.html", context=locals())
+
+def get_one_task(request, pk):
+    todo = ToDo.objects.get(id=pk)
+    return render(request, template_name="one_task.html", context=locals())
