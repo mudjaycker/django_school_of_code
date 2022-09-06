@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib import auth
 from .models import Auteur, ToDo
 
 # Create your views here.
@@ -22,3 +23,22 @@ def list_todos(request):
 def get_one_task(request, pk):
     todo = ToDo.objects.get(id=pk)
     return render(request, template_name="one_task.html", context=locals())
+
+def delete_task(request, pk):
+    if request.method == "POST":
+        todo = ToDo.objects.get(id=pk)
+        todo.delete()
+        return redirect("/list-todos/")
+    return render(request, template_name="delete_task.html")
+
+def update_task(request, pk):
+    todo = ToDo.objects.get(id=pk)
+    if request.method == "POST":
+        todo.titre = request.POST.get("titre")
+        todo.description = request.POST.get("description")
+        todo.date_fin = request.POST.get("date-fin")
+        todo.save()
+        return redirect("/list-todos/")
+    return render(request, template_name="update_task.html", context={"todo": todo})
+
+
