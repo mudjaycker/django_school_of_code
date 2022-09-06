@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'main.html' %}
+
+{% block contenu %}
+{% load static %}
     <form action="" method="post">
         {% csrf_token %}
         <div class="form-group">
@@ -19,6 +14,4 @@
         </div>
         <input type="submit" value="Se connecter">
     </form>
-
-</body>
-</html>
+{% endblock %}

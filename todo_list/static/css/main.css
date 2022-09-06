@@ -1,0 +1,33 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;    
+}
+body{
+    background:#ddd;
+    font-family: sans-serif;
+}
+form{
+    width: 300px;
+    margin: 40px auto;
+    background-color: #eee;
+    padding: 10px;
+}
+.form-group *{
+    display: block;
+    width: 100%;
+}
+.form-group{
+    margin: 10px 0;
+}
+
+input{
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #9ad;
+}
+
+input[type=submit]{
+    padding: 5px 10px;
+    border-radius: 5px;
+}
