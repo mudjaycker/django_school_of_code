@@ -51,4 +51,7 @@ def login(request):
         if user:
             auth.login(request, user)
             return redirect("/list-todos/")
-        return render(request, template_name="login.html")
+    return render(request, template_name="login.html")
+
+
+# def enregistree
