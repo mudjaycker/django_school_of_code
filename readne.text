@@ -1,0 +1,55 @@
+0- Rassurez vous d'ouvrir le cmd (invite de commande) dans le dossier ou vous voulez travaillez
+1- Creation du project
+    django-admin startproject mon_project
+    cd mon_project
+2- Creation de l'application
+    python manage.py startapp mon_app
+3- Premieres migrations
+    python manage.py migrate
+4- Creation du super utilisateur (celui ci est a peu pres l'admin)
+    python manage.py createsuper user
+    - suivez les instructions
+5- Creation des models (Les models sont des representation des tables de votre base de donnees)
+    -ouvrir et modifier le fichier models.py qui se trouve dans l'application
+    ----------------- exemple d'un model ----------------
+    class Auteur(models.Model): #nous heritons de la classe Model du package models de django
+        id = models.AutoField(primary_key=True) #Nous declarons une cles primaire qui sera auto-incremente (+1)
+        nom = models.CharField(max_length=26, unique=True) #Nous declarons un champ nom qui sera unique et qui contiendra maximum 26 caracteres
+        num_phone = models.CharField(max_length=10, unique=True) #Nous declarons un champ num_phone qui sera unique et qui contiendra maximum 10 caracteres
+
+6-Connection du Model a la view
+    -ouvrir et modifier le fichier views de l'application
+    ------------------ exemple d'une view ----------------------
+    def list_todos(request): #le parametre request est obligatoire
+        auteurs = Auteur.objects.all() #nous effectuons une requete qui recupere tous les auteurs
+        return render(request, template_name="auteur.html", context=locals()) #nous lions notre vue avec un fichier que nous allons creer dans le dossier "mon_app/templates/" (grace au parametre context=locals() ce fichier html a acces aux resultat de la requete du model)
+
+7-Modification du fichier urls.py du projet
+    --------------- exemple -------------------------
+    from django.contrib import admin
+    from django.urls import path, include #Nous ajoutons include dans les importations
+
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('mon_app/', include("todo_app.urls")), #voila notre modification, pour acceder aux urls de l'application (pour acceder aux urls de l'application il suffit de faire http://localhost:8000/mon_app/)
+    ]
+
+8-Declarations des urls pour l'application
+    -creer un fichier urls.py dans le dossier de votre application
+    ------------ Exemple d'une url de l'application ----------------- 
+    from django.urls import path
+    from . views import * #nous importons toutes les views
+    urlpatterns = [
+        path('add-todo/', add_new_todo), #nous associons la vue a la route
+        ]
+
+!!! Points cles !!!
+    1- Associations d'un model a l'admin
+        - ouvrir et modifier le fichier admin de l'application
+            from django.contrib import admin
+            from .models import *
+
+            admin.site.register(Auteur)
+
+    2- Lancement du serveur
+        python manage.py runserver
