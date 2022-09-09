@@ -2,10 +2,17 @@
 
 {% block contenu %}
 {% load static %}
+    <div class="tasks">
     {% for todo in todos %}
-    titre: {{ todo.titre }}
-        <br>
-        auteur:   {{ todo.auteur.user }}
-        <br><br>
+    <div class="task">
+        <div>{{ todo.titre }}</div>
+        <div>
+            <a href="{%url 'update_task' todo.id %}">modifier</a>
+            <a href="{%url 'delete_task' todo.id %}">supprimmer</a>
+        </div>
+    </div>
+    <div>
+    </div>
     {% endfor %}
+    </div>
 {%endblock%}
